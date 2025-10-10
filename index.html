@@ -126,3 +126,19 @@ filmeDiv.appendChild(removerBotao);
 // Adiciona o filme montado (filmeDiv) dentro do conteiner principal na página.
 listaFilmesContainer.appendChild(filmeDiv);
 }
+
+//---------------------------------------------------------------------
+// FUNÇÃO PRINCIPAL DE ADIÇÃO (Manipulador do Formulário)
+//---------------------------------------------------------------------
+/**
+ * Lida com o envio do formulário, captura os dados e salva o filme.
+ * @param {Event} evento - O evento de 'submit' do formulário.
+ */
+function adicionarFilme(evento) {
+    // 3. Previne o recarregamento da página
+    // O comportamento padrão de um formulário é recarregar a página. O preventDefault() impede isso.
+    evento.preventDefault();
+
+    // 4. Captura os valores dos campos
+    const tituloInput = document.getElementById('titulo');
+    const sinopseInput = document.getElementById('sinopse');
