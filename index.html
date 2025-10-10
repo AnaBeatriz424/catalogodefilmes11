@@ -160,3 +160,12 @@ renderizarFilme(novoFilme, catalogo.length - 1);
 // 7. Limpa o formulario
 // O método .reset() limpa todos os campos do formulário para o próximo cadastro.
 form.reset();
+}
+
+
+// 8. ESCUTANDO O EVENTO DO BOTÃO/FORMULÁRIO
+// Anexamos a função 'adicionarFilme' ao evento de 'submit' do formulário.
+form.addEventListener('submit', adicionarFilme);
+
+console.log("JavaScript Carregado. Pronto para iniciar o catalogo!");
+</script>
