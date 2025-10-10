@@ -111,3 +111,17 @@ function renderizarFilme(filme, indice) {
         // Ao clicar, chamamos a função, passando o índice (posição) e a própria <div> (filmeDiv).
     removerFilme(indice, filmeDiv);
 });
+
+// C. ANEXAR ELEMENTOS (appendChild)
+// Monta a estrutura hierárquica:
+// filmeDiv
+// | - tituloH3
+// | - sinopseP
+// | - removerBotao
+filmeDiv.appendChild(tituloH3);
+filmeDiv.appendChild(sinopseP);
+filmeDiv.appendChild(removerBotao);
+
+// D. INSERÇÃO NO DOM FINAL
+// Adiciona o filme montado (filmeDiv) dentro do conteiner principal na página.
+listaFilmesContainer.appendChild(filmeDiv);
