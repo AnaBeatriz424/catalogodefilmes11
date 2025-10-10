@@ -142,3 +142,21 @@ function adicionarFilme(evento) {
     // 4. Captura os valores dos campos
     const tituloInput = document.getElementById('titulo');
     const sinopseInput = document.getElementById('sinopse');
+
+    // Cria o objeto JavaScript com os dados
+const novoFilme = {
+    titulo: tituloInput.value,
+    sinopse: sinopseInput.value
+};
+
+     // 5. Armazena o filme no Array
+    // O método .push() adiciona o novo objeto no final do array 'catalogo'.
+    catalogo.push(novoFilme);
+
+    // 6. Renderiza na Tela
+// Passamos o novo objeto e seu índice (que é sempre o último, ou seja, tamanho - 1)
+renderizarFilme(novoFilme, catalogo.length - 1);
+
+// 7. Limpa o formulario
+// O método .reset() limpa todos os campos do formulário para o próximo cadastro.
+form.reset();
