@@ -48,3 +48,6 @@ background-color: #0056b3;
 /* ---------------------------------------------------------------------------------- */
 
 /* Container do Filme: Organiza imagem e texto */
+.filme-item {
+display: flex; /* Habilita o alinhamento lado a lado */
+align-items: flex-start; /* Alinha o conteúdo ao topo */
