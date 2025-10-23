@@ -15,13 +15,13 @@
 <form id="cadastro-filme">
 <h2>Adicionar Novo Filme (Busca por API)</h2>
 <div>
-      <label for="titulo">Título do Filme:</label>
-      <input type="text" id="titulo" required>
+<label for="titulo">Título do Filme:</label>
+<input type="text" id="titulo" required>
 </div>
+
 
 <button type="submit">Buscar e Adicionar Filme</button>
 </form>
-
 <hr>
 
 <h2>Minha Lista De Filmes</h2>
@@ -32,7 +32,7 @@
 
 <script>
 // A CHAVE SECRETA DA API OMDb (Substitua este string pela sua chave real!)
-const API_KEY = ' 40e58f02';
+const API_KEY = '40e58f02';
 
 // 1. ARMAZENAMENTO DE DADOS 
 const catalogo = [];
@@ -132,7 +132,7 @@ try {
 
         catalogo.push(novoFilme);
         renderizarFilme(novoFilme, catalogo.length - 1);
-        
+
     }  else{
         alert(`Filme não encontrado na OMDb: "${titulo}".`);
     }
