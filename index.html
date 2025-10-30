@@ -70,48 +70,15 @@ tituloH3.textContent = filme.titulo;
 const sinopseP = document.createElement('p');
 sinopseP.textContent = filme.sinopse || 'Sinopse não disponível.';
 
-// -------------------------------------------------------------
-// FUNÇÃO DE RENDERIZAÇÃO (Adaptada para incluir o pôster)
-// -------------------------------------------------------------
-function renderizarFilme(filme, indice) {
-    if (catalogo.length === 1) {
-        listaFilmesContainer.innerHTML = '';
-    }
-
-    const filmeDiv = document.createElement('div');
-    filmeDiv.classList.add('filme-item');
-
-// A. Elemento Imagem (Pôster)
-const imagemPoster = document.createElement('img');
-imagemPoster.src = filme.poster && filme.poster !== 'N/A'
-                   ? filme.poster
-                   : 'https://via,placeholder.com/100x150?text=Poster+Nao+Disponivel';
-imagemPoster.alt = `Pôster do filme ${filme.titulo}`;
-imagemPoster.classList.add('filme-poster');
-
-// B. Elementos de Texto e Info
-const infoDiv = document.createElement('div');
-infoDiv.classList.add('filme-info');
-
-const tituloH3 = document.createElement('h3');
-tituloH3.textContent = filme.titulo;
-
-const sinopseP = document.createElement('p');
-sinopseP.textContent = filme.sinopse;
-
 const removerBotao = document.createElement('button');
 removerBotao.textContent = 'Remover';
 removerBotao.classList.add('btn-remover');
 
-// C. Evento de Remoção
 removerBotao.addEventListener('click', () => {
     const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titulo);
-    if (indiceAtual > -1) {
-          removerFilme(indiceAtual, filmeDiv);
-    }
+    if (indiceAtual > -1) removerFilme(indiceAtual, filmeDiv);
 });
 
-// D. Montagem do DOM
 infoDiv.appendChild(tituloH3);
 infoDiv.appendChild(sinopseP);
 infoDiv.appendChild(removerBotao);
@@ -122,47 +89,36 @@ filmeDiv.appendChild(infoDiv);
 listaFilmesContainer.appendChild(filmeDiv);
 }
 
-// ----------------------------------------------------------------------------------
-// FUNÇÃO PRINCIPAL DE ADIÇÃO (Assíncrona para a API)
-// ----------------------------------------------------------------------------------
 async function adicionarFilme(evento) {
     evento.preventDefault();
+    const titulo = tituloInput.value.trim();
+    if (!titulo) return;
 
-const titulo = tituloInput.value.trim();
-if (!titulo) return;
+    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}&lang=pt`;
 
-const tituloFormatado = encodeURIComponent(titulo);
-const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${tituloFormatado}`;
-
-try {
+    try {
     const resposta = await fetch(url);
     const dadosDoFilme = await resposta.json();
 
-    if (dadosDoFilme.response === "True") {
-
+    if (dadosDoFilme.Response === "True") {
         const novoFilme = {
             titulo: dadosDoFilme.Title,
             sinopse: dadosDoFilme.Plot,
-            poster: dadosDoFilme.Poster,
+            poster: dadosDoFilme.Poster
         };
 
         catalogo.push(novoFilme);
+        salvarCatalogo();
         renderizarFilme(novoFilme, catalogo.length - 1);
-
-    }  else{
-        alert(`Filme não encontrado na OMDb: "${titulo}".`);
+    } else {
+        alert(`Filme não encontrado: ${titulo}.`);
     }
-
-} catch (error) {
-    alert('Ocorreu um erro ao tentar buscar o filme na API. Verifique sua chave.');
-    console.error('Erro de Fetch:', error);
+} catch (erro) {
+    alert('Erro ao buscar o filme na API.');
+    console.error('Erro:', erro);
 }
 
 form.reset();
 }
 
-// 6. ESCUTANDO O EVENTO DO FORMULÁRIO
-form.addEventListener('submit', adicionarFilme);
-</script>
-</body>
-</html>
+// Recarregar lista ao abrir a página
