@@ -122,3 +122,16 @@ form.reset();
 }
 
 // Recarregar lista ao abrir a página
+function carregarCatalogo() {
+    if (catalogo.length > 0) {
+        listaFilmesContainer.innerHTML = '';
+        catalogo.forEach((filme, i) => renderizarFilme(filme, i));
+    }
+}
+
+form.addEventListener('submit', adicionarFilme);
+carregarCatalogo();
+</script>
+
+</body>
+</html>
