@@ -30,3 +30,35 @@ card.innerHTML = `
         </button>
     </div>
 `;
+
+// Adiciona um listener para a funcionalidade de trailer (Se você tiver uma API)
+// Se você usar o OMDB, precisará de uma segunda chamada para os detalhes
+card.addEventListener('click', () => buscarEExibirDetalhes(filme.imdbID));
+
+return card;
+}
+
+// --- B. Função Principal de Busca ---
+/**
+ * Busca o filme na OMDB e atualiza o container.
+ * @param {string} termo - Termo de busca digitado pelo usuário.
+ */
+async function buscarFilmes(termo) {
+    if (!termo) return; // Não busca se o campo estiver vazio
+
+    // Limpa a lista anterior e mostra um indicador de carregamento
+listaFilmesContainer.innerHTML = '<p style="text-align: center; color: gray;">Carregando...</p>';
+
+try {
+    // Busca na OMDB (O parâmetro 's' para busca por termo)
+    const response = await fetch(`https://www.omdbapi.com/?s=${termo}&apikey=${OMDB_API_KEY}`);
+    const data = await response.json();
+
+    // Limpa o container novamente
+    listaFilmesContainer.innerHTML = '';
+
+    if (data.Response === 'True' && data.Search) {
+        data.Search.forEach(async (filmeBase) => {
+            // A OMDB retorna apenas dados básicos na busca (s=).
+            // Precisamos de uma segunda busca (i=) para pegar o Rating.
+            const filmeDetalhado = await buscarDetalhes(filmeBase.imdbID);
