@@ -74,3 +74,17 @@ try {
     listaFilmesContainer.innerHTML = '<p style="text-align: center; color: red;">Erro na conexão com a API.</p>';
     }
 } 
+
+// --- C. Função para Buscar Detalhes e Trailer (Chamada Adicional) ---
+// É NECESSÁRIA pois a OMDB não retorna o Rating na busca por 's'
+async function buscarDetalhes(imdbID) {
+    try {
+        // Busca na OMDB (O parâmetro 'i' para busca por ID)
+        const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${OMDB_API_KEY}`);
+        const data = await response.json();
+        return data.Response === 'True' ? data : null;
+    } catch (error) {
+        console.error("Erro ao buscar detalhes:", error);
+        return null;
+    }
+}
