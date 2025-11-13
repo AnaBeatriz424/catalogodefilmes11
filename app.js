@@ -61,4 +61,16 @@ try {
         data.Search.forEach(async (filmeBase) => {
             // A OMDB retorna apenas dados básicos na busca (s=).
             // Precisamos de uma segunda busca (i=) para pegar o Rating.
-            const filmeDetalhado = await buscarDetalhes(filmeBase.imdbID);
+          const filmeDetalhado = await buscarDetalhes(filmeBase.imdbID);
+    if (filmeDetalhado) {
+        listaFilmesContainer.appendChild(criarCardFilme(filmeDetalhado));
+         }
+     });
+    } else {
+        listaFilmesContainer.innerHTML = `<p style="text-align: center;">Nenhum filme encontrado para "${termo}".</p>`;
+    }
+} catch (error) {
+    console.error("Erro ao buscar filmes:", error);
+    listaFilmesContainer.innerHTML = '<p style="text-align: center; color: red;">Erro na conexão com a API.</p>';
+    }
+} 
